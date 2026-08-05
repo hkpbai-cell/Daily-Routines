@@ -419,22 +419,28 @@
         <div class="instruction">Instructions: Read the question and choose the best answer.</div>
 
         <div class="question-block">
-            <div class="question-text">7. What do you do at 7:00 a.m.?</div>
+            <div class="question-text">
+                <span>7. What time do you………………………….. ?</span>
+                <img src="7.png" alt="Question 7 Image" class="question-img">
+            </div>
             <ul class="options-list">
-                <li><label><input type="radio" name="q7" value="A"> A. I go to bed.</label></li>
-                <li><label><input type="radio" name="q7" value="B"> B. I have dinner.</label></li>
-                <li><label><input type="radio" name="q7" value="C"> C. I have breakfast.</label></li>
-                <li><label><input type="radio" name="q7" value="D"> D. I do my homework.</label></li>
+                <li><label><input type="radio" name="q7" value="A"> A. I go to bed at seven o’clock.</label></li>
+                <li><label><input type="radio" name="q7" value="B"> B. I have dinner at eight o’clock.</label></li>
+                <li><label><input type="radio" name="q7" value="C"> C. I have lunch at eleven o’clock.</label></li>
+                <li><label><input type="radio" name="q7" value="D"> D. I do my homework at nine o’clock.</label></li>
             </ul>
         </div>
 
         <div class="question-block">
-            <div class="question-text">8. What do you do before you go to school?</div>
+            <div class="question-text">
+                <span>8. What time do you……………………………………………?</span>
+                <img src="8.png" alt="Question 8 Image" class="question-img">
+            </div>
             <ul class="options-list">
-                <li><label><input type="radio" name="q8" value="A"> A. I get dressed.</label></li>
-                <li><label><input type="radio" name="q8" value="B"> B. I go to bed.</label></li>
-                <li><label><input type="radio" name="q8" value="C"> C. I have dinner.</label></li>
-                <li><label><input type="radio" name="q8" value="D"> D. I do my homework.</label></li>
+                <li><label><input type="radio" name="q8" value="A"> A. I go to school at seven o’clock.</label></li>
+                <li><label><input type="radio" name="q8" value="B"> B. I go to bed at eight o’clock.</label></li>
+                <li><label><input type="radio" name="q8" value="C"> C. I get dressed at nine o’clock .</label></li>
+                <li><label><input type="radio" name="q8" value="D"> D. I do my homework at six o’clock.</label></li>
             </ul>
         </div>
 
@@ -443,35 +449,27 @@
 
         <div class="question-block">
             <div class="question-text">
-                <span>9. Look at the picture and complete the conversation:</span>
+                <span>9. A: What time do you………………….. ?<br>B: ______________________</span>
                 <img src="9.png" alt="Question 9 Image" class="question-img">
-                <div>
-                    A: What do you do in the evening?<br>
-                    B: _______________________
-                </div>
             </div>
             <ul class="options-list">
-                <li><label><input type="radio" name="q9" value="A"> A. I go to school.</label></li>
-                <li><label><input type="radio" name="q9" value="B"> B. I brush my teeth.</label></li>
-                <li><label><input type="radio" name="q9" value="C"> C. I watch TV.</label></li>
-                <li><label><input type="radio" name="q9" value="D"> D. I have breakfast.</label></li>
+                <li><label><input type="radio" name="q9" value="A"> A. I go to school at seven o’clock.</label></li>
+                <li><label><input type="radio" name="q9" value="B"> B. I brush my teeth at six o’clock.</label></li>
+                <li><label><input type="radio" name="q9" value="C"> C. I watch TV at four o’clock.</label></li>
+                <li><label><input type="radio" name="q9" value="D"> D. I have breakfast at seven o’clock.</label></li>
             </ul>
         </div>
 
         <div class="question-block">
             <div class="question-text">
-                <span>10. Look at the picture and complete the conversation:</span>
+                <span>10. A: What time do you………………………?<br>B: ______________________</span>
                 <img src="10.png" alt="Question 10 Image" class="question-img">
-                <div>
-                    A: What do you do at noon?<br>
-                    B: _______________________
-                </div>
             </div>
             <ul class="options-list">
-                <li><label><input type="radio" name="q10" value="A"> A. I get dressed.</label></li>
-                <li><label><input type="radio" name="q10" value="B"> B. I have lunch.</label></li>
-                <li><label><input type="radio" name="q10" value="C"> C. I take a shower.</label></li>
-                <li><label><input type="radio" name="q10" value="D"> D. I go to bed.</label></li>
+                <li><label><input type="radio" name="q10" value="A"> A. I get dressed at seven o’clock.</label></li>
+                <li><label><input type="radio" name="q10" value="B"> B. I have lunch at twelve o’clock.</label></li>
+                <li><label><input type="radio" name="q10" value="C"> C. I take a shower at nine o’clock.</label></li>
+                <li><label><input type="radio" name="q10" value="D"> D. I go to bed at nine o’clock.</label></li>
             </ul>
         </div>
 
@@ -561,7 +559,7 @@
         }
     }
 
-    // เฉลยข้อที่ถูกต้อง
+    // เฉลยข้อที่ถูกต้อง (อัปเดตตามไฟล์ต้นฉบับข้อ 7-10)
     const correctAnswers = {
         q1: 'A',
         q2: 'C',
@@ -572,7 +570,7 @@
         q7: 'C',
         q8: 'A',
         q9: 'C',
-        q10: 'B'
+        q10: 'D'
     };
 
     // ส่งคำตอบและคำนวณคะแนน
