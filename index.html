@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>แบบทดสอบออนไลน์ Daily Routines</title>
+    <title>บทเรียนและแบบทดสอบออนไลน์ Daily Routines</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -19,13 +19,73 @@
             background-color: var(--bg-color);
             color: #333;
             line-height: 1.6;
-            padding: 20px;
             margin: 0;
+            padding: 0;
         }
 
+        /* ----- ส่วนของหน้าแรก (Home Page) จัดปุ่มไว้ด้านล่าง ----- */
+        #home-page {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('11.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 40px;
+            z-index: 1000;
+        }
+
+        .home-menu-bottom {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 95%;
+            max-width: 1000px;
+        }
+
+        .home-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .home-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            color: #7f8c8d;
+        }
+
+        .home-btn:not(:disabled) {
+            background-color: var(--secondary-color);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .home-btn:not(:disabled):hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+        }
+
+        /* ----- ส่วนของคอนเทนเนอร์ทั่วไป ----- */
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 30px auto;
             background: #fff;
             padding: 30px;
             border-radius: 10px;
@@ -40,12 +100,7 @@
             margin-bottom: 30px;
         }
 
-        /* ส่วนแสดงวีดีโอ */
-        #video-card {
-            text-align: center;
-            padding: 10px;
-        }
-
+        /* วีดีโอ */
         .video-wrapper {
             position: relative;
             width: 100%;
@@ -62,268 +117,135 @@
             display: block;
         }
 
-        .video-status-msg {
-            color: #7f8c8d;
-            font-size: 0.95em;
-            margin-top: 10px;
-        }
-
-        /* ส่วนกรอกชื่อก่อนทำข้อสอบ */
-        #start-card {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-        }
-
-        .input-group {
-            margin: 20px 0;
-        }
-
-        .input-group input {
-            width: 80%;
-            max-width: 400px;
-            padding: 12px;
-            font-size: 1em;
-            font-family: 'Sarabun', sans-serif;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus {
-            border-color: var(--secondary-color);
-        }
-
-        .instruction {
-            background-color: #e8f4f8;
-            padding: 10px 15px;
-            border-left: 5px solid var(--secondary-color);
-            margin: 20px 0 15px 0;
-            font-weight: 600;
-        }
-
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed #ccc;
-        }
-
-        .question-text {
-            font-size: 1.1em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .question-img {
-            max-width: 100%;
+        /* รูปภาพใบความรู้ */
+        .knowledge-img {
+            width: 100%;
             height: auto;
-            max-height: 380px;
+            margin-bottom: 20px;
             border-radius: 8px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            margin: 5px 0 10px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             display: block;
         }
 
-        .options-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+        /* ส่วนแบบทดสอบและทั่วไป */
+        #start-card { display: none; text-align: center; }
+        .input-group { margin: 20px 0; }
+        .input-group input {
+            width: 80%; max-width: 400px; padding: 12px; font-size: 1em;
+            font-family: 'Sarabun', sans-serif; border: 2px solid #ccc;
+            border-radius: 5px; outline: none;
+        }
+        .input-group input:focus { border-color: var(--secondary-color); }
+
+        .question-wrapper {
+            margin-bottom: 25px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 15px;
         }
 
-        .options-list li {
-            margin-bottom: 8px;
+        .instruction {
+            background-color: #e8f4f8; padding: 8px 12px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 0 0 10px 0; font-weight: 600; font-size: 0.95em;
         }
 
-        label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 5px;
-            transition: background 0.3s;
+        .question-block {
+            margin-bottom: 0; padding-bottom: 0; border-bottom: none;
         }
 
-        label:hover {
-            background-color: #f1f2f6;
+        .question-text {
+            font-size: 1.1em; font-weight: bold; margin-bottom: 10px;
+            display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
         }
 
-        input[type="radio"] {
-            margin-right: 10px;
-            transform: scale(1.2);
+        .question-img {
+            max-width: 100%; height: auto; max-height: 380px;
+            border-radius: 8px; box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            margin: 5px 0 10px 0; display: block;
         }
 
-        /* ปุ่มกด */
+        .options-list { list-style-type: none; padding: 0; margin: 0; }
+        .options-list li { margin-bottom: 8px; }
+        label { display: flex; align-items: center; cursor: pointer; padding: 8px; border-radius: 5px; }
+        label:hover { background-color: #f1f2f6; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+
+        /* ปุ่มต่างๆ */
         .btn {
-            display: inline-block;
-            width: 100%;
-            padding: 12px 20px;
-            font-size: 1.1em;
-            color: #fff;
-            background-color: var(--secondary-color);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
-            font-family: 'Sarabun', sans-serif;
-            font-weight: bold;
-            text-align: center;
+            display: inline-block; width: 100%; padding: 12px 20px;
+            font-size: 1.1em; color: #fff; background-color: var(--secondary-color);
+            border: none; border-radius: 8px; cursor: pointer;
+            font-family: 'Sarabun', sans-serif; font-weight: bold; text-align: center;
         }
+        .btn:hover { background-color: #2980b9; }
+        .btn-success { background-color: var(--success-color); }
+        .btn-secondary { background-color: #7f8c8d; margin-top: 10px; }
+        .btn-danger { background-color: var(--danger-color); margin-top: 10px; }
+        .btn-home { background-color: #34495e; margin-bottom: 10px; margin-top: 20px;}
 
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn-success {
-            background-color: var(--success-color);
-        }
-
-        .btn-success:hover {
-            background-color: #27ae60;
-        }
-
-        .btn-secondary {
-            background-color: #7f8c8d;
-            margin-top: 10px;
-        }
-
-        .btn-secondary:hover {
-            background-color: #6c757d;
-        }
-
-        .btn-danger {
-            background-color: var(--danger-color);
-            margin-top: 10px;
-        }
-
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
-
-        /* ปุ่มฟังเสียง */
         .audio-btn {
-            background-color: #f39c12;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 1em;
-            font-family: 'Sarabun', sans-serif;
-            transition: background 0.3s, transform 0.1s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #f39c12; color: white; border: none;
+            padding: 8px 20px; border-radius: 20px; cursor: pointer;
+            font-size: 1em; font-family: 'Sarabun', sans-serif;
+            display: inline-flex; align-items: center; gap: 8px;
         }
 
-        .audio-btn:hover {
-            background-color: #d35400;
-        }
-
-        .audio-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* ผลลัพธ์และตารางคะแนน */
-        #result-container {
-            display: none;
-            margin-top: 30px;
-        }
-
-        .score-box {
-            text-align: center;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border: 2px solid var(--primary-color);
-            margin-bottom: 30px;
-        }
-
-        .score-text {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        /* ตารางจัดลำดับ */
-        .leaderboard-section {
-            margin-top: 30px;
-        }
-
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        .leaderboard-table th, .leaderboard-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .leaderboard-table th {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .leaderboard-table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .leaderboard-table tr:hover {
-            background-color: #e2e8f0;
-        }
-
-        .correct-answer {
-            background-color: #d4edda !important;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .wrong-answer {
-            background-color: #f8d7da !important;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
+        /* ตารางและผลลัพธ์ */
+        #result-container { display: none; margin-top: 30px; }
+        .score-box { text-align: center; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border: 2px solid var(--primary-color); margin-bottom: 30px; }
+        .score-text { font-size: 1.8em; font-weight: bold; color: var(--primary-color); }
+        .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .leaderboard-table th, .leaderboard-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .leaderboard-table th { background-color: var(--primary-color); color: white; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>แบบทดสอบ Daily Routines</h1>
-    
-    <!-- หน้าที่ 1: วีดีโอนำเข้าสู่บทเรียน (ดึงไฟล์ CAI.mp4 จากโฟลเดอร์) -->
-    <div id="video-card">
-        <h2>🎥 ชมวีดีโอบทเรียนก่อนทำแบบทดสอบ</h2>
-        <div class="video-wrapper">
-            <video id="intro-video" controls autoplay muted playsinline>
-                <source src="CAI.mp4" type="video/mp4">
-                ขออภัย เบราว์เซอร์ของคุณไม่รองรับการเล่นวีดีโอ
-            </video>
-        </div>
-        <p class="video-status-msg" id="video-msg">กรุณารับชมวีดีโอให้จบ ปุ่มเข้าสู่แบบทดสอบจะปรากฏขึ้นอัตโนมัติ</p>
-        
-        <!-- ปุ่มกดไปหน้าลงชื่อ -->
-        <button type="button" id="next-to-register-btn" class="btn btn-success" style="display: none; max-width: 350px; margin: 15px auto;" onclick="goToRegister()">
-            เข้าทำแบบทดสอบ ➔
-        </button>
+<!-- ================= หน้าแรก (Home Page) ================= -->
+<div id="home-page">
+    <div class="home-menu-bottom">
+        <button id="btn-pretest" class="home-btn" onclick="startMode('pre')">1. ทำแบบทดสอบก่อนเรียน</button>
+        <button id="btn-video" class="home-btn" onclick="openVideoPage()" disabled>2. วีดีโอคำศัพท์</button>
+        <button id="btn-knowledge" class="home-btn" onclick="openKnowledgePage()" disabled>3. ใบความรู้</button>
+        <button id="btn-posttest" class="home-btn" onclick="startMode('post')" disabled>4. ทำแบบทดสอบหลังเรียน</button>
     </div>
+</div>
 
-    <!-- หน้าที่ 2: กรอกชื่อผู้ทำแบบทดสอบ -->
-    <div id="start-card">
+<!-- ================= หน้าวีดีโอคำศัพท์ (เมนู 2) ================= -->
+<div id="video-page" class="container" style="display: none; text-align: center;">
+    <h1>🎥 วีดีโอคำศัพท์ Daily Routines</h1>
+    <div class="video-wrapper">
+        <video id="lesson-video" controls playsinline>
+            <source src="CAI.mp4" type="video/mp4">
+            ขออภัย เบราว์เซอร์ของคุณไม่รองรับการเล่นวีดีโอ
+        </video>
+    </div>
+    <button class="btn btn-home" onclick="returnToHomeFromVideo()">🏠 กลับหน้าแรก (รับชมเสร็จสิ้น)</button>
+</div>
+
+<!-- ================= หน้าใบความรู้แบบรูปภาพ (เมนู 3) ================= -->
+<div id="knowledge-page" class="container" style="display: none;">
+    <h1>📚 ใบความรู้ Daily Routines</h1>
+    <p style="text-align: center; margin-bottom: 20px;">ศึกษาใบความรู้จากรูปภาพด้านล่างให้ครบถ้วน</p>
+    
+    <img src="img/Daily Routines 3_page-0001.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0001.png'" class="knowledge-img">
+    <img src="img/Daily Routines 3_page-0002.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0002.png'" class="knowledge-img">
+    <img src="img/Daily Routines 3_page-0003.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0003.png'" class="knowledge-img">
+    <img src="img/Daily Routines 3_page-0004.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0004.png'" class="knowledge-img">
+    <img src="img/Daily Routines 3_page-0005.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0005.png'" class="knowledge-img">
+    <img src="img/Daily Routines 3_page-0006.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0006.png'" class="knowledge-img">
+    <img src="img/Daily Routines 3_page-0007.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0007.png'" class="knowledge-img">
+    <img src="img/Daily Routines 3_page-0008.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0008.png'" class="knowledge-img">
+    <img src="img/Daily Routines 3_page-0009.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0009.png'" class="knowledge-img">
+
+    <button class="btn btn-home" onclick="returnToHomeFromKnowledge()">🏠 กลับหน้าแรก (อ่านเสร็จสิ้น)</button>
+</div>
+
+<!-- ================= หน้าหลักของแบบทดสอบ ================= -->
+<div class="container" id="main-quiz-container" style="display: none;">
+    <h1 id="quiz-title">แบบทดสอบ Daily Routines</h1>
+    
+    <div id="start-card" style="display: block;">
         <h2>ยินดีต้อนรับสู่แบบทดสอบ</h2>
         <p>กรุณากรอกชื่อ-นามสกุลของคุณก่อนเริ่มทำแบบทดสอบ</p>
         <div class="input-group">
@@ -332,154 +254,184 @@
         <button type="button" class="btn" style="max-width: 300px;" onclick="startQuiz()">เริ่มทำแบบทดสอบ</button>
     </div>
 
-    <!-- หน้าที่ 3: แบบทดสอบ -->
+    <!-- ฟอร์มแบบทดสอบ 10 ข้อ -->
     <form id="quiz-form" style="display: none;">
-        <!-- Section 1 -->
-        <div class="instruction">Instructions: Listen to the word and choose the correct answer.</div>
-        
-        <div class="question-block">
-            <div class="question-text">
-                <div>1. <button type="button" class="audio-btn" onclick="playAudio('Brush my teeth. Brush my teeth.')">🔊 กดเพื่อฟังเสียง</button></div>
+        <div id="questions-wrapper">
+            <!-- ข้อ 1 -->
+            <div class="question-wrapper" data-id="q1">
+                <div class="instruction">Instructions: Listen to the word and choose the correct answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <div><span class="q-num">1.</span> <button type="button" class="audio-btn" onclick="playAudio('Brush my teeth. Brush my teeth.')">🔊 กดเพื่อฟังเสียง</button></div>
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q1" value="A"> A. Brush my teeth</label></li>
+                        <li><label><input type="radio" name="q1" value="B"> B. Go to school</label></li>
+                        <li><label><input type="radio" name="q1" value="C"> C. Have breakfast</label></li>
+                        <li><label><input type="radio" name="q1" value="D"> D. Go to bed</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q1" value="A"> A. Brush my teeth</label></li>
-                <li><label><input type="radio" name="q1" value="B"> B. Go to school</label></li>
-                <li><label><input type="radio" name="q1" value="C"> C. Have breakfast</label></li>
-                <li><label><input type="radio" name="q1" value="D"> D. Go to bed</label></li>
-            </ul>
-        </div>
-
-        <div class="question-block">
-            <div class="question-text">
-                <div>2. <button type="button" class="audio-btn" onclick="playAudio('Comb my hair. Comb my hair.')">🔊 กดเพื่อฟังเสียง</button></div>
+            
+            <!-- ข้อ 2 -->
+            <div class="question-wrapper" data-id="q2">
+                <div class="instruction">Instructions: Listen to the word and choose the correct answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <div><span class="q-num">2.</span> <button type="button" class="audio-btn" onclick="playAudio('Comb my hair. Comb my hair.')">🔊 กดเพื่อฟังเสียง</button></div>
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q2" value="A"> A. Take a shower</label></li>
+                        <li><label><input type="radio" name="q2" value="B"> B. Watch TV</label></li>
+                        <li><label><input type="radio" name="q2" value="C"> C. Comb my hair</label></li>
+                        <li><label><input type="radio" name="q2" value="D"> D. Get dressed</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q2" value="A"> A. Take a shower</label></li>
-                <li><label><input type="radio" name="q2" value="B"> B. Watch TV</label></li>
-                <li><label><input type="radio" name="q2" value="C"> C. Comb my hair</label></li>
-                <li><label><input type="radio" name="q2" value="D"> D. Get dressed</label></li>
-            </ul>
-        </div>
 
-        <div class="question-block">
-            <div class="question-text">
-                <div>3. <button type="button" class="audio-btn" onclick="playAudio('Wash my face. Wash my face.')">🔊 กดเพื่อฟังเสียง</button></div>
+            <!-- ข้อ 3 -->
+            <div class="question-wrapper" data-id="q3">
+                <div class="instruction">Instructions: Listen to the word and choose the correct answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <div><span class="q-num">3.</span> <button type="button" class="audio-btn" onclick="playAudio('Wash my face. Wash my face.')">🔊 กดเพื่อฟังเสียง</button></div>
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q3" value="A"> A. Have lunch</label></li>
+                        <li><label><input type="radio" name="q3" value="B"> B. Wash my face</label></li>
+                        <li><label><input type="radio" name="q3" value="C"> C. Get up</label></li>
+                        <li><label><input type="radio" name="q3" value="D"> D. Go home</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q3" value="A"> A. Have lunch</label></li>
-                <li><label><input type="radio" name="q3" value="B"> B. wash my face</label></li>
-                <li><label><input type="radio" name="q3" value="C"> C. Get up</label></li>
-                <li><label><input type="radio" name="q3" value="D"> D. Go home</label></li>
-            </ul>
-        </div>
 
-        <!-- Section 2 -->
-        <div class="instruction">Instructions: Look at the picture and choose the correct answer.</div>
-
-        <div class="question-block">
-            <div class="question-text">
-                <span>4. Look at the picture:</span>
-                <img src="4.png" alt="Question 4 Image" class="question-img">
+            <!-- ข้อ 4 -->
+            <div class="question-wrapper" data-id="q4">
+                <div class="instruction">Instructions: Look at the picture and choose the correct answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <span><span class="q-num">4.</span> Look at the picture:</span>
+                        <img src="4.png" alt="Question 4 Image" class="question-img">
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q4" value="A"> A. Get dressed</label></li>
+                        <li><label><input type="radio" name="q4" value="B"> B. Have lunch</label></li>
+                        <li><label><input type="radio" name="q4" value="C"> C. Take a shower</label></li>
+                        <li><label><input type="radio" name="q4" value="D"> D. Go to school</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q4" value="A"> A. Get dressed</label></li>
-                <li><label><input type="radio" name="q4" value="B"> B. Have lunch</label></li>
-                <li><label><input type="radio" name="q4" value="C"> C. Take a shower</label></li>
-                <li><label><input type="radio" name="q4" value="D"> D. Go to school</label></li>
-            </ul>
-        </div>
 
-        <div class="question-block">
-            <div class="question-text">
-                <span>5. Look at the picture:</span>
-                <img src="5.png" alt="Question 5 Image" class="question-img">
+            <!-- ข้อ 5 -->
+            <div class="question-wrapper" data-id="q5">
+                <div class="instruction">Instructions: Look at the picture and choose the correct answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <span><span class="q-num">5.</span> Look at the picture:</span>
+                        <img src="5.png" alt="Question 5 Image" class="question-img">
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q5" value="A"> A. Watch TV</label></li>
+                        <li><label><input type="radio" name="q5" value="B"> B. Get dressed</label></li>
+                        <li><label><input type="radio" name="q5" value="C"> C. Get up</label></li>
+                        <li><label><input type="radio" name="q5" value="D"> D. Go home</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q5" value="A"> A. Watch TV</label></li>
-                <li><label><input type="radio" name="q5" value="B"> B. Get dressed</label></li>
-                <li><label><input type="radio" name="q5" value="C"> C. Get up</label></li>
-                <li><label><input type="radio" name="q5" value="D"> D. Go home</label></li>
-            </ul>
-        </div>
 
-        <div class="question-block">
-            <div class="question-text">
-                <span>6. Look at the picture:</span>
-                <img src="6.png" alt="Question 6 Image" class="question-img">
+            <!-- ข้อ 6 -->
+            <div class="question-wrapper" data-id="q6">
+                <div class="instruction">Instructions: Look at the picture and choose the correct answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <span><span class="q-num">6.</span> Look at the picture:</span>
+                        <img src="6.png" alt="Question 6 Image" class="question-img">
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q6" value="A"> A. Have lunch</label></li>
+                        <li><label><input type="radio" name="q6" value="B"> B. Go to bed</label></li>
+                        <li><label><input type="radio" name="q6" value="C"> C. Do my homework</label></li>
+                        <li><label><input type="radio" name="q6" value="D"> D. Watch TV</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q6" value="A"> A. Have lunch</label></li>
-                <li><label><input type="radio" name="q6" value="B"> B. Go to bed</label></li>
-                <li><label><input type="radio" name="q6" value="C"> C. Do my homework</label></li>
-                <li><label><input type="radio" name="q6" value="D"> D. Watch TV</label></li>
-            </ul>
-        </div>
 
-        <!-- Section 3 -->
-        <div class="instruction">Instructions: Listen the question and choose the best answer.</div>
-
-        <div class="question-block">
-            <div class="question-text">
-                <div>7. <button type="button" class="audio-btn" onclick="playAudio('What time do you have dinner ? What time do you have dinner ?')">🔊 กดเพื่อฟังเสียง</button></div>
+            <!-- ข้อ 7 -->
+            <div class="question-wrapper" data-id="q7">
+                <div class="instruction">Instructions: Listen to the question and choose the best answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <div><span class="q-num">7.</span> <button type="button" class="audio-btn" onclick="playAudio('What time do you have dinner ? What time do you have dinner ?')">🔊 กดเพื่อฟังเสียง</button></div>
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q7" value="A"> A. I go to bed at seven o’clock.</label></li>
+                        <li><label><input type="radio" name="q7" value="B"> B. I have lunch at eleven o’clock.</label></li>
+                        <li><label><input type="radio" name="q7" value="C"> C. I have dinner at eight o’clock.</label></li>
+                        <li><label><input type="radio" name="q7" value="D"> D. I do my homework at nine o’clock.</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q7" value="A"> A. I go to bed at seven o’clock.</label></li>
-                <li><label><input type="radio" name="q7" value="B"> B. I have lunch at eleven o’clock.</label></li>
-                <li><label><input type="radio" name="q7" value="C"> C. I have dinner at eight o’clock.</label></li>
-                <li><label><input type="radio" name="q7" value="D"> D. I do my homework at nine o’clock.</label></li>
-            </ul>
-        </div>
 
-        <div class="question-block">
-            <div class="question-text">
-                <div>8. <button type="button" class="audio-btn" onclick="playAudio('What time do you go to school? What time do you go to school?')">🔊 กดเพื่อฟังเสียง</button></div>
+            <!-- ข้อ 8 -->
+            <div class="question-wrapper" data-id="q8">
+                <div class="instruction">Instructions: Listen to the question and choose the best answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <div><span class="q-num">8.</span> <button type="button" class="audio-btn" onclick="playAudio('What time do you go to school? What time do you go to school?')">🔊 กดเพื่อฟังเสียง</button></div>
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q8" value="A"> A. I go to school at seven o’clock.</label></li>
+                        <li><label><input type="radio" name="q8" value="B"> B. I go to bed at eight o’clock.</label></li>
+                        <li><label><input type="radio" name="q8" value="C"> C. I get dressed at nine o’clock.</label></li>
+                        <li><label><input type="radio" name="q8" value="D"> D. I do my homework at six o’clock.</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q8" value="A"> A. I go to school at seven o’clock.</label></li>
-                <li><label><input type="radio" name="q8" value="B"> B. I go to bed at eight o’clock.</label></li>
-                <li><label><input type="radio" name="q8" value="C"> C. I get dressed at nine o’clock .</label></li>
-                <li><label><input type="radio" name="q8" value="D"> D. I do my homework at six o’clock.</label></li>
-            </ul>
-        </div>
 
-        <!-- Section 4 -->
-        <div class="instruction">Look at the picture and choose the best answer.</div>
-
-        <div class="question-block">
-            <div class="question-text">
-                <span>9. A: What time do you………………….. ?<br>B: ______________________</span>
-                <img src="9.png" alt="Question 9 Image" class="question-img">
+            <!-- ข้อ 9 -->
+            <div class="question-wrapper" data-id="q9">
+                <div class="instruction">Instructions: Look at the picture and choose the best answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <span><span class="q-num">9.</span> A: What time do you………………….. ?<br>B: ______________________</span>
+                        <img src="9.png" alt="Question 9 Image" class="question-img">
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q9" value="A"> A. I go to school at seven o’clock.</label></li>
+                        <li><label><input type="radio" name="q9" value="B"> B. I brush my teeth at six o’clock.</label></li>
+                        <li><label><input type="radio" name="q9" value="C"> C. I watch TV at four o’clock.</label></li>
+                        <li><label><input type="radio" name="q9" value="D"> D. I have breakfast at seven o’clock.</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q9" value="A"> A. I go to school at seven o’clock.</label></li>
-                <li><label><input type="radio" name="q9" value="B"> B. I brush my teeth at six o’clock.</label></li>
-                <li><label><input type="radio" name="q9" value="C"> C. I watch TV at four o’clock.</label></li>
-                <li><label><input type="radio" name="q9" value="D"> D. I have breakfast at seven o’clock.</label></li>
-            </ul>
-        </div>
 
-        <div class="question-block">
-            <div class="question-text">
-                <span>10. A: What time do you………………………?<br>B: ______________________</span>
-                <img src="10.png" alt="Question 10 Image" class="question-img">
+            <!-- ข้อ 10 -->
+            <div class="question-wrapper" data-id="q10">
+                <div class="instruction">Instructions: Look at the picture and choose the best answer.</div>
+                <div class="question-block">
+                    <div class="question-text">
+                        <span><span class="q-num">10.</span> A: What time do you………………………?<br>B: ______________________</span>
+                        <img src="10.png" alt="Question 10 Image" class="question-img">
+                    </div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q10" value="A"> A. I get dressed at seven o’clock.</label></li>
+                        <li><label><input type="radio" name="q10" value="B"> B. I have lunch at twelve o’clock.</label></li>
+                        <li><label><input type="radio" name="q10" value="C"> C. I take a shower at nine o’clock.</label></li>
+                        <li><label><input type="radio" name="q10" value="D"> D. I go to bed at nine o’clock.</label></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="options-list">
-                <li><label><input type="radio" name="q10" value="A"> A. I get dressed at seven o’clock.</label></li>
-                <li><label><input type="radio" name="q10" value="B"> B. I have lunch at twelve o’clock.</label></li>
-                <li><label><input type="radio" name="q10" value="C"> C. I take a shower at nine o’clock.</label></li>
-                <li><label><input type="radio" name="q10" value="D"> D. I go to bed at nine o’clock.</label></li>
-            </ul>
         </div>
 
         <button type="submit" id="submit-btn" class="btn">ส่งคำตอบ</button>
     </form>
 
-    <!-- หน้าที่ 4: ผลคะแนน และตารางจัดลำดับ -->
+    <!-- ผลคะแนน และตารางจัดลำดับ -->
     <div id="result-container">
         <div class="score-box">
             <h2>ผลคะแนนของคุณ <span id="display-user-name"></span></h2>
             <div class="score-text" id="score-display">0 / 10</div>
-            <p>เฉลยข้อที่ถูกต้องจะแสดงด้วยสีเขียว ข้อที่ผิดจะแสดงด้วยสีแดง</p>
+            <p>ระบบได้บันทึกคะแนนของคุณเรียบร้อยแล้ว</p>
         </div>
 
         <div class="leaderboard-section">
@@ -497,40 +449,129 @@
                 </tbody>
             </table>
         </div>
-
-        <button onclick="location.reload()" class="btn btn-secondary">ทำแบบทดสอบอีกครั้ง</button>
-        <button onclick="clearLeaderboard()" class="btn btn-danger">ล้างประวัติคะแนนทั้งหมด</button>
+        <button type="button" onclick="returnToHome()" class="btn btn-home">🏠 กลับสู่หน้าแรก</button>
+        <button type="button" onclick="startMode(currentMode)" class="btn btn-secondary">ทำแบบทดสอบอีกครั้ง</button>
+        <button type="button" onclick="clearLeaderboard()" class="btn btn-danger">ล้างประวัติคะแนนทั้งหมด</button>
     </div>
 </div>
 
 <script>
-    const introVideo = document.getElementById('intro-video');
-    const nextToRegisterBtn = document.getElementById('next-to-register-btn');
-    const videoMsg = document.getElementById('video-msg');
+    // ==========================================
+    // ตัวแปรเก็บสถานะการเข้าใช้งาน
+    // ==========================================
+    let preTestDone = false;    
+    let videoViewed = false;    
+    let knowledgeViewed = false;
+    
+    let currentMode = ''; 
     let currentStudentName = "";
 
-    // เมื่อเล่นวีดีโอจบ ให้แสดงปุ่มเข้าสู่การลงชื่อ
-    introVideo.addEventListener('ended', function() {
-        nextToRegisterBtn.style.display = 'inline-block';
-        videoMsg.innerText = "รับชมวีดีโอจบแล้ว กดปุ่มด้านล่างเพื่อเข้าสู่การลงชื่อได้เลยครับ";
-        videoMsg.style.color = "#27ae60";
-        videoMsg.style.fontWeight = "bold";
-    });
+    // เมื่อโหลดหน้าเว็บ ให้ดึงข้อมูลสถานะ
+    window.onload = () => {
+        let state = JSON.parse(localStorage.getItem('quiz_app_state_v2'));
+        
+        if (state) {
+            preTestDone = state.preTestDone;
+            videoViewed = state.videoViewed;
+            knowledgeViewed = state.knowledgeViewed;
+        } else {
+            preTestDone = false;
+            videoViewed = false;
+            knowledgeViewed = false;
+        }
+        updateButtons();
+    };
 
-    // แสดงปุ่มหลังจากผ่านไป 3 วินาที เพื่อสำรองในกรณีเล่นวีดีโอไม่ได้
-    setTimeout(() => {
-        nextToRegisterBtn.style.display = 'inline-block';
-    }, 3000);
-
-    // ไปยังหน้ากรอกชื่อ
-    function goToRegister() {
-        introVideo.pause();
-        document.getElementById('video-card').style.display = 'none';
-        document.getElementById('start-card').style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    function saveState() {
+        localStorage.setItem('quiz_app_state_v2', JSON.stringify({
+            preTestDone: preTestDone,
+            videoViewed: videoViewed,
+            knowledgeViewed: knowledgeViewed
+        }));
     }
 
-    // เริ่มทำแบบทดสอบ
+    // ==========================================
+    // ควบคุมการปลดล็อกปุ่ม
+    // ==========================================
+    function updateButtons() {
+        document.getElementById('btn-pretest').disabled = false;
+        
+        if (preTestDone === true) {
+            document.getElementById('btn-video').disabled = false;
+            document.getElementById('btn-knowledge').disabled = false;
+        } else {
+            document.getElementById('btn-video').disabled = true;
+            document.getElementById('btn-knowledge').disabled = true;
+        }
+        
+        if (preTestDone === true && videoViewed === true && knowledgeViewed === true) {
+            document.getElementById('btn-posttest').disabled = false;
+        } else {
+            document.getElementById('btn-posttest').disabled = true;
+        }
+    }
+
+    // ==========================================
+    // ฟังก์ชันเข้าเมนูต่างๆ และกดกลับหน้าแรก
+    // ==========================================
+    function openVideoPage() {
+        document.getElementById('home-page').style.display = 'none';
+        document.getElementById('video-page').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function returnToHomeFromVideo() {
+        document.getElementById('lesson-video').pause();
+        videoViewed = true;
+        saveState();
+        updateButtons(); 
+        document.getElementById('video-page').style.display = 'none';
+        document.getElementById('home-page').style.display = 'flex';
+    }
+
+    function openKnowledgePage() {
+        document.getElementById('home-page').style.display = 'none';
+        document.getElementById('knowledge-page').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function returnToHomeFromKnowledge() {
+        knowledgeViewed = true;
+        saveState();
+        updateButtons(); 
+        document.getElementById('knowledge-page').style.display = 'none';
+        document.getElementById('home-page').style.display = 'flex';
+    }
+
+    function startMode(mode) {
+        currentMode = mode;
+        document.getElementById('home-page').style.display = 'none';
+        document.getElementById('main-quiz-container').style.display = 'block';
+        window.scrollTo(0, 0);
+        
+        document.getElementById('result-container').style.display = 'none';
+        document.getElementById('quiz-form').style.display = 'none';
+        document.getElementById('submit-btn').style.display = 'block';
+        document.getElementById('quiz-form').reset();
+        
+        document.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = false);
+        document.querySelectorAll('.audio-btn').forEach(btn => {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+        });
+        
+        document.getElementById('student-name').value = '';
+        currentStudentName = '';
+        
+        document.getElementById('start-card').style.display = 'block';
+        if (mode === 'pre') {
+            document.getElementById('quiz-title').innerText = "📝 แบบทดสอบก่อนเรียน Daily Routines";
+        } else {
+            document.getElementById('quiz-title').innerText = "📝 แบบทดสอบหลังเรียน Daily Routines";
+        }
+    }
+
     function startQuiz() {
         const nameInput = document.getElementById('student-name').value.trim();
         if (nameInput === "") {
@@ -538,65 +579,85 @@
             return;
         }
         currentStudentName = nameInput;
+
+        // ==========================================
+        // ระบบสลับข้อ (Shuffle Questions)
+        // ==========================================
+        const wrapper = document.getElementById('questions-wrapper');
+        const questions = Array.from(wrapper.getElementsByClassName('question-wrapper'));
+        
+        if (currentMode === 'pre') {
+            // สลับข้อแบบสุ่มเฉพาะโหมด Pre-test
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]];
+            }
+        } else {
+            // เรียงกลับเป็นลำดับเดิมในโหมด Post-test (หรือเปลี่ยนไปตาม data-id)
+            questions.sort((a, b) => {
+                const aId = parseInt(a.getAttribute('data-id').substring(1));
+                const bId = parseInt(b.getAttribute('data-id').substring(1));
+                return aId - bId;
+            });
+        }
+        
+        // นำข้อสอบใส่กลับเข้าไปในหน้าเว็บ และรันเลขข้อใหม่ (1, 2, 3...)
+        questions.forEach((q, index) => {
+            wrapper.appendChild(q);
+            q.querySelector('.q-num').innerText = (index + 1) + ".";
+        });
+        // ==========================================
+
         document.getElementById('start-card').style.display = 'none';
         document.getElementById('quiz-form').style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ฟังก์ชันเล่นเสียงอ่านข้อความ
+    function returnToHome() {
+        if (currentMode === 'pre') {
+            preTestDone = true; 
+        }
+        saveState();
+        updateButtons(); 
+        document.getElementById('main-quiz-container').style.display = 'none';
+        document.getElementById('home-page').style.display = 'flex';
+    }
+
+    // ==========================================
+    // ระบบตรวจคำตอบ และเสียง
+    // ==========================================
     function playAudio(text) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'en-US';
             utterance.rate = 0.85;
-            utterance.pitch = 1;
             window.speechSynthesis.speak(utterance);
         } else {
             alert("ขออภัย เบราว์เซอร์ของคุณไม่รองรับระบบเสียง (Text-to-Speech)");
         }
     }
 
-    // เฉลยข้อที่ถูกต้อง
     const correctAnswers = {
-        q1: 'A',
-        q2: 'C',
-        q3: 'B',
-        q4: 'C',
-        q5: 'B',
-        q6: 'C',
-        q7: 'C',
-        q8: 'A',
-        q9: 'C',
-        q10: 'D'
+        q1: 'A', q2: 'C', q3: 'B', q4: 'C', q5: 'B',
+        q6: 'C', q7: 'C', q8: 'A', q9: 'C', q10: 'D'
     };
 
-    // ส่งคำตอบและคำนวณคะแนน
     document.getElementById('quiz-form').addEventListener('submit', function(e) {
         e.preventDefault();
         
         let score = 0;
         const totalQuestions = Object.keys(correctAnswers).length;
 
-        document.querySelectorAll('label').forEach(label => {
-            label.classList.remove('correct-answer', 'wrong-answer');
-        });
-
         for (let question in correctAnswers) {
             const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
-            const correctLabel = document.querySelector(`input[name="${question}"][value="${correctAnswers[question]}"]`).parentElement;
-            correctLabel.classList.add('correct-answer');
-
             if (selectedOption) {
                 if (selectedOption.value === correctAnswers[question]) {
                     score++;
-                } else {
-                    selectedOption.parentElement.classList.add('wrong-answer');
                 }
             }
         }
 
-        // ล็อกตัวเลือก
         document.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
         document.querySelectorAll('.audio-btn').forEach(btn => {
             btn.disabled = true;
@@ -606,43 +667,33 @@
 
         document.getElementById('submit-btn').style.display = 'none';
 
-        // บันทึกคะแนนและแสดงตาราง
-        saveScore(currentStudentName, score, totalQuestions);
+        let saveName = currentStudentName + (currentMode === 'pre' ? ' (ก่อนเรียน)' : ' (หลังเรียน)');
+        saveScore(saveName, score, totalQuestions);
         displayResults(score, totalQuestions);
     });
 
-    // บันทึกข้อมูลลง LocalStorage
     function saveScore(name, score, total) {
         let leaderboard = JSON.parse(localStorage.getItem('english_quiz_leaderboard')) || [];
-        
         const newRecord = {
             name: name,
             score: score,
             total: total,
             date: new Date().toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'short' })
         };
-
         leaderboard.push(newRecord);
-
-        // จัดลำดับคะแนนสูงสุดลงมาน้อยสุด
         leaderboard.sort((a, b) => b.score - a.score);
-
         localStorage.setItem('english_quiz_leaderboard', JSON.stringify(leaderboard));
     }
 
-    // แสดงผลคะแนนและตาราง
     function displayResults(score, total) {
         document.getElementById('display-user-name').innerText = `(${currentStudentName})`;
         document.getElementById('score-display').innerText = `${score} / ${total}`;
-        
         renderLeaderboard();
-
         const resultContainer = document.getElementById('result-container');
         resultContainer.style.display = 'block';
         resultContainer.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // แสดงตารางคะแนน
     function renderLeaderboard() {
         let leaderboard = JSON.parse(localStorage.getItem('english_quiz_leaderboard')) || [];
         const tbody = document.getElementById('leaderboard-body');
@@ -670,7 +721,6 @@
         });
     }
 
-    // ล้างตารางคะแนน
     function clearLeaderboard() {
         if (confirm("คุณต้องการล้างประวัติคะแนนทั้งหมดใช่หรือไม่?")) {
             localStorage.removeItem('english_quiz_leaderboard');
@@ -678,16 +728,9 @@
         }
     }
 
-    // ฟังก์ชันป้องกัน XSS
     function escapeHtml(text) {
         return text.replace(/[&<>"']/g, function(m) {
-            return {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            }[m];
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
         });
     }
 </script>
