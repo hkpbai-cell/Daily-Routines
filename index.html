@@ -228,15 +228,15 @@
     <h1>📚 ใบความรู้ Daily Routines</h1>
     <p style="text-align: center; margin-bottom: 20px;">ศึกษาใบความรู้จากรูปภาพด้านล่างให้ครบถ้วน</p>
     
-    <img src="img/Daily Routines 3_page-0001.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0001.png'" class="knowledge-img">
-    <img src="img/Daily Routines 3_page-0002.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0002.png'" class="knowledge-img">
-    <img src="img/Daily Routines 3_page-0003.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0003.png'" class="knowledge-img">
-    <img src="img/Daily Routines 3_page-0004.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0004.png'" class="knowledge-img">
-    <img src="img/Daily Routines 3_page-0005.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0005.png'" class="knowledge-img">
-    <img src="img/Daily Routines 3_page-0006.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0006.png'" class="knowledge-img">
-    <img src="img/Daily Routines 3_page-0007.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0007.png'" class="knowledge-img">
-    <img src="img/Daily Routines 3_page-0008.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0008.png'" class="knowledge-img">
-    <img src="img/Daily Routines 3_page-0009.jpg" onerror="this.onerror=null; this.src='img/Daily Routines 3_page-0009.png'" class="knowledge-img">
+    <img src="Daily Routines 3_page-0001.jpg" class="knowledge-img">
+    <img src="Daily Routines 3_page-0002.jpg" class="knowledge-img">
+    <img src="Daily Routines 3_page-0003.jpg" class="knowledge-img">
+    <img src="Daily Routines 3_page-0004.jpg" class="knowledge-img">
+    <img src="Daily Routines 3_page-0005.jpg" class="knowledge-img">
+    <img src="Daily Routines 3_page-0006.jpg" class="knowledge-img">
+    <img src="Daily Routines 3_page-0007.jpg" class="knowledge-img">
+    <img src="Daily Routines 3_page-0008.jpg" class="knowledge-img">
+    <img src="Daily Routines 3_page-0009.jpg" class="knowledge-img">
 
     <button class="btn btn-home" onclick="returnToHomeFromKnowledge()">🏠 กลับหน้าแรก (อ่านเสร็จสิ้น)</button>
 </div>
@@ -259,7 +259,7 @@
         <div id="questions-wrapper">
             <!-- ข้อ 1 -->
             <div class="question-wrapper" data-id="q1">
-                <div class="instruction">Instructions: Listen to the word and choose the correct answer.</div>
+                <div class="instruction">Instructions: Listen to the question and choose the best answer.</div>
                 <div class="question-block">
                     <div class="question-text">
                         <div><span class="q-num">1.</span> <button type="button" class="audio-btn" onclick="playAudio('Brush my teeth. Brush my teeth.')">🔊 กดเพื่อฟังเสียง</button></div>
@@ -275,7 +275,7 @@
             
             <!-- ข้อ 2 -->
             <div class="question-wrapper" data-id="q2">
-                <div class="instruction">Instructions: Listen to the word and choose the correct answer.</div>
+                <div class="instruction">Instructions: Listen to the question and choose the best answer.</div>
                 <div class="question-block">
                     <div class="question-text">
                         <div><span class="q-num">2.</span> <button type="button" class="audio-btn" onclick="playAudio('Comb my hair. Comb my hair.')">🔊 กดเพื่อฟังเสียง</button></div>
@@ -291,7 +291,7 @@
 
             <!-- ข้อ 3 -->
             <div class="question-wrapper" data-id="q3">
-                <div class="instruction">Instructions: Listen to the word and choose the correct answer.</div>
+                <div class="instruction">Instructions: Listen to the question and choose the best answer.</div>
                 <div class="question-block">
                     <div class="question-text">
                         <div><span class="q-num">3.</span> <button type="button" class="audio-btn" onclick="playAudio('Wash my face. Wash my face.')">🔊 กดเพื่อฟังเสียง</button></div>
@@ -587,13 +587,11 @@
         const questions = Array.from(wrapper.getElementsByClassName('question-wrapper'));
         
         if (currentMode === 'pre') {
-            // สลับข้อแบบสุ่มเฉพาะโหมด Pre-test
             for (let i = questions.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [questions[i], questions[j]] = [questions[j], questions[i]];
             }
         } else {
-            // เรียงกลับเป็นลำดับเดิมในโหมด Post-test (หรือเปลี่ยนไปตาม data-id)
             questions.sort((a, b) => {
                 const aId = parseInt(a.getAttribute('data-id').substring(1));
                 const bId = parseInt(b.getAttribute('data-id').substring(1));
@@ -601,7 +599,6 @@
             });
         }
         
-        // นำข้อสอบใส่กลับเข้าไปในหน้าเว็บ และรันเลขข้อใหม่ (1, 2, 3...)
         questions.forEach((q, index) => {
             wrapper.appendChild(q);
             q.querySelector('.q-num').innerText = (index + 1) + ".";
